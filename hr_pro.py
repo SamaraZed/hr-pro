@@ -1,4 +1,4 @@
-import datetime
+from datetime import date
 
 class Employee:
 
@@ -6,37 +6,36 @@ class Employee:
        self.name = employee_name
        self.age = employee_age
        self.salary = employee_salary
-       self.year = employment_year
+       self.employment_year = employment_year
 
     def get_working_years(self):
-        today = datetime.datetime.now()
-        return int(today - self.year)
+        current_year = date.today().year
+        return current_year - self.employment_year
 
     def __str__(self):
-        return 'Employee (name= '+ self.name +', age= '+ str(self.age) +', salary= '+ self.salary +', employment year: '+ self.year + ')'
+        return 'Employee (name= '+ self.name +', age= '+ str(self.age) +', salary= '+ str(self.salary) +', employment year: '+ str(self.employment_year) + ')'
 
 class Manager(Employee):
 
-    def __init__(self, employee_name , employee_age, employee_salary, employment_year, bonus_percentage):
+    def __init__(self, employee_name , employee_age, employee_salary, employment_year, bonus):
         super().__init__(employee_name , employee_age, employee_salary, employment_year)
-        self.bonus = bonus_percentage
+        self.bonus_percentage = bonus
 
     def get_working_years(self):
-        today = datetime.datetime.now()
-        return int(today - self.year)
+        current_year = date.today().year
+        return current_year - self.employment_year
 
     def get_bonus(self):
-        return self.bonus * self.salary
+        return self.bonus_percentage * self.salary
 
     def __str__(self):
-        return 'Manager (name= '+ self.name +', age= '+ str(self.age) +', salary= '+ self.salary +', employment year: '+ self.year + ', bonus: '+self.bonus+ ')'
+        return 'Manager (name= '+ self.name +', age= '+ str(self.age) +', salary= '+ str(self.salary) +', employment year: '+ str(self.employment_year) + ', bonus: '+str(self.bonus_percentage) + ')'
 
 
 def main():
     employees = []
     managers = []
 
-    x = input ("Please choose an option from 1-5: ")
     print ("Options:")
     print ("    1. Show Employees")
     print ("    2. Show Managers")
@@ -44,30 +43,47 @@ def main():
     print ("    4. Add A Manager")
     print ("    5. Exit")
 
-    while 0 < x < 6 :
+    x = int(input ("Please choose an option from 1-5: "))
+
+
+    while x != 5 :
         if x == 1:
-            print (employees)
+            print("***************************")
+            print("Employees: ")
+            for item in employees:
+                print(item)
         elif x == 2:
-            print (managers)
+            print("***************************")
+            print("Managers: ")
+            for item in managers:
+                print(item)
         elif x == 3:
+            print("***************************")
             print ("Enter employee info: ")
-            newemp = Employee()
-            newemp.name = input("name: ")
-            newemp.age = input("age: ")
-            newemp.salary = input("salary: ")
-            newemp.year = input("employment date: ")
+            name = input("name: ")
+            age = input("age: ")
+            salary = float(input("salary: "))
+            year = int(input("employment date: "))
+            newemp = Employee(name,age,salary,year)
+            employees.append(newemp)
         elif x == 4:
+            print("***************************")
             print("Enter manager info: ")
-            newman = Manager()
-            newman.name = input("name: ")
-            newman.age = input("age: ")
-            newman.salary = input("salary: ")
-            newman.year = input("employment date: ")
-            newman.bonus = input("manager's bonus: ")
-        elif x == 5:
-            break
-        else:
-            print("invalid input")
+            name = input("name: ")
+            age = input("age: ")
+            salary = float(input("salary: "))
+            year = int(input("employment date: "))
+            bonus = float(input("bonus salary: "))
+            newman = Manager(name,age,salary,year,bonus)
+            managers.append(newman)
+        print ("Options:")
+        print ("    1. Show Employees")
+        print ("    2. Show Managers")
+        print ("    3. Add An Employee")
+        print ("    4. Add A Manager")
+        print ("    5. Exit")
+
+        x = int(input ("Please choose an option from 1-5: "))
 
 
 
